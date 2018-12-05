@@ -10,6 +10,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.Assert.assertEquals;
 
+/***
+ * THIS IS A SUPPLEMENT TO THE PRIMARY ENTRY WRITTEN IN .NET
+ * PLEASE REVIEW THE .NET SUBMISSION FIRST
+ */
+
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class QuestionThreeTestFixture {
@@ -40,7 +46,7 @@ class JsonMapperTestUtility {
                 ).toString();
     }
 
-    public  static  String GetExampleSchema() throws JSONException {
+    public static String GetExampleSchema() throws JSONException {
         return new JSONObject()
                 .put("Test_Name", "Name")
                 .put("Test_Value", "This.That.TheOther")

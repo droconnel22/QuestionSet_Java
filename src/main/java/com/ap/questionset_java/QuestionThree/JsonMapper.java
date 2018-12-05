@@ -17,7 +17,7 @@ public class JsonMapper {
 
         ObjectMapper mapper = new ObjectMapper();
         Map<String, String> schemaMap = mapper.readValue(schema, new TypeReference<Map<String,String>>(){});
-        Map<String, String> resultMap = new HashMap<String, String>();
+        Map<String, String> resultMap = new HashMap<>();
         JsonNode jsonNode = mapper.readTree(input);
 
         for(Map.Entry<String, String> entry : schemaMap.entrySet()) {
@@ -28,10 +28,8 @@ public class JsonMapper {
                 jsonNode = jsonNode.elements().next();
                 currentKey = path.remove();
             }
-            resultMap.put(entry.getKey(),jsonNode.get(currentKey).textValue());
+            resultMap.put(entry.getKey(),jsonNode.has(currentKey) ? jsonNode.get(currentKey).textValue() : null);
         }
-
-
         return mapper.writeValueAsString(resultMap);
     }
 }
