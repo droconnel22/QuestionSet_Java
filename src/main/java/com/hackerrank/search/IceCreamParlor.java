@@ -24,39 +24,62 @@ package com.hackerrank.search;
 
  */
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class IceCreamParlor {
 
     public Integer[] Purchase(ArrayList<Integer> costs, Integer allowance) {
-
         // 1. Sort In Descending Order
 
         // 2. Go to the first value lower then allowance.
 
         // 3. Go to the first value that matches difference / if none met reset to next lowest.
-        List<Integer> originalCost = new ArrayList<>(costs);
-        Collections.sort(costs, Collections.reverseOrder());
 
-        int currentCostIndex = 0;
-        while(currentCostIndex < costs.size()){
-            if(costs.get(currentCostIndex) < allowance) {
-                int nextCostIndex = currentCostIndex+1;
-                int remaining = allowance - costs.get(currentCostIndex);
-                //  select the two -> doesnt work they are the same...
-                while(nextCostIndex < costs.size()){
-                    if(remaining == costs.get(nextCostIndex)) {
-                        return new Integer[]{originalCost.indexOf(costs.get(nextCostIndex))+1,
-                                originalCost.indexOf(costs.get(currentCostIndex ))+1};
-                    }
-                    nextCostIndex++;
+        // only take first O(N)
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for(int i = 0; i < costs.size(); i++) {
+            map.put(costs.get(i),i);
+        }
+
+        // O (N)
+        for(int i = 0; i < costs.size(); i++) {
+            int remaining = allowance - costs.get(i);
+            if(map.containsKey(remaining)) {
+                if(map.get(remaining) != i) {
+                    Integer[] array = {i+1, map.get(remaining)+1};
+                    Arrays.sort(array);
+                    return array;
                 }
             }
-            currentCostIndex++;
         }
+
         return new Integer[]{};
     }
+
+
+
+
 }
+
+/**
+ int currentCostIndex = 0;
+ while(currentCostIndex < costs.size()){
+ if(costs.get(currentCostIndex) < allowance) {
+ int nextCostIndex = currentCostIndex+1;
+ int remaining = allowance - costs.get(currentCostIndex);
+ //  select the two -> doesnt work they are the same...
+ while(nextCostIndex < costs.size()){
+ if(remaining == costs.get(nextCostIndex)) {
+ return new Integer[]{
+ map.get(costs.get(nextCostIndex))+1,
+ map.get(costs.get(currentCostIndex))+1
+ };
+ }
+ nextCostIndex++;
+ }
+ }
+ currentCostIndex++;
+ }
+ return new Integer[]{};
+
+ */
