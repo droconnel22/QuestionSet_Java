@@ -28,11 +28,11 @@ public class QuickSort {
         int j = right;
 
         while(inProgress){
-            while(i <= j && array[i] <= pivotValue){
+            while(i < j && array[i] <= pivotValue){
                 i++;
             }
 
-            while(i <=j && array[j] > pivotValue){
+            while(i <j && array[j] > pivotValue){
                 j--;
             }
 

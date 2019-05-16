@@ -54,11 +54,13 @@ public class Graph<T> implements IGraph<T>{
 
         INode<T> firstNode = this.FindNode(value);
         if(firstNode == null){
+            firstNode = new Node<>(value);
             this.edges.add(firstNode);
         }
 
         INode<T> secondNode = this.FindNode(other);
         if(secondNode == null){
+            secondNode = new Node<>(other);
             this.edges.add(secondNode);
         }
 

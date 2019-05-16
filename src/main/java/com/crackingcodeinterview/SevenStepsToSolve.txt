@@ -1,0 +1,34 @@
+1. Listen carefully to the problem, every detail is necessary
+2. Good example, larger, avoid special cases
+3. Brute force algorithm it so much better to start with slow versus nothing at all
+Dont code it,
+a. State brute force
+b. state runtime (big oh)
+c. Optimize
+4.Optimize your solution
+5. Walk through your algorithm, an 80% understanding of what your about to write
+is not enough to start coding. Retrace your steps and decisions
+6. Code
+Whiteboard -write straight, use space wisely, use top left corner
+coding style matters, brances, camelcase, naming conventions absolutley matter,
+be consistent, write a good descriptive variable numbers, but dont waste time',
+modularize up front, put off to another function,
+start with overall function splitting away chunks of code
+7. Test
+
+a. analyze
+think about each line
+double check things that look wierd risky
+for loops that decrement, math, etc
+b. use small test cases first, faster to run, you will probably be more thorough
+c. edge casese
+d. big test cases
+e. remember -> think as you test, don't be a bot.
+f. test your code, not your algorithm
+g. don't panic when you find the bug think before you fix bugs, don't make the wrong
+fix to your code
+
+Follow this process!
+
+
+
