@@ -52,6 +52,9 @@ public class CCProgram {
             InsertionSort insertionSort = new InsertionSort();
             Arrays.stream(insertionSort.sort(isArray)).boxed().forEach(i -> System.out.print(i+ " "));
 
+            HuffmanCodingTree huffmanCodingTree = new HuffmanCodingTree();
+            huffmanCodingTree.ScenarioOne();
+
 
         } catch (Exception ex){
             System.out.println();
