@@ -55,6 +55,14 @@ public class CCProgram {
             HuffmanCodingTree huffmanCodingTree = new HuffmanCodingTree();
             huffmanCodingTree.ScenarioOne();
 
+            //StringPermutations stringPermutations = new StringPermutations();
+            //stringPermutations.ScenarioOne();
+
+            BinarySearch binarySearch = new BinarySearch();
+            binarySearch.ScenarioExists();
+
+            LinkedListCycle linkedListCycle = new LinkedListCycle();
+            linkedListCycle.ScenarioWithCycle();
 
         } catch (Exception ex){
             System.out.println();

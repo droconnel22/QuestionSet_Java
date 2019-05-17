@@ -74,7 +74,9 @@ public class HuffmanCodingTree {
                 return null;
             }
 
-            return this.queue.entrySet().stream()
+            return this.queue
+                    .entrySet()
+                    .stream()
                     .min(Comparator.comparingInt(Map.Entry::getValue)).get().getKey();
         }
 
