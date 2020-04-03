@@ -47,9 +47,7 @@ public class IceCreamParlorTestFixture {
                         new ArrayList<>(Arrays.asList(2,2,4,3)),
                         4,
                         new Integer[]{1,2}
-                },
-
-
+                }
         };
     }
 

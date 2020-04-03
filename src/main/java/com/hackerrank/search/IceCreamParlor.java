@@ -26,6 +26,7 @@ package com.hackerrank.search;
 
 import java.util.*;
 
+// Easy/Mid -> 30 point is the line between easy and medium.
 public class IceCreamParlor {
 
     public Integer[] Purchase(ArrayList<Integer> costs, Integer allowance) {
@@ -55,10 +56,6 @@ public class IceCreamParlor {
 
         return new Integer[]{};
     }
-
-
-
-
 }
 
 /**
