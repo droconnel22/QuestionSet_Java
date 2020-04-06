@@ -1,11 +1,35 @@
 package com.crackingcodeinterview;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class CCProgram {
     public static void main(String...args){
 
+        final List<Integer> list = new ArrayList<>();
+        Collections.addAll(list, 1,5,2,3,7,3,8,9);
+        final Integer pos = Integer.valueOf(3);
+        list.remove(pos);
+        System.out.println(list);
+
+
+    int a = 1;
+        int b = a++;
+        int c = ++b;
+
+        int k = 1 << 2;
+
+        final char s = 0x20;
+        final int message = 1;
+        System.out.println(s+message+"=A");
+
+
+        System.out.println(a+" "+ b + " " +c + " "+ k);
+
         try {
+
             /*
             int[] array = {4,7,9,2,3,1,10};
             QuickSort quickSort = new QuickSort();
@@ -63,6 +87,9 @@ public class CCProgram {
 
             LinkedListCycle linkedListCycle = new LinkedListCycle();
             linkedListCycle.ScenarioWithCycle();
+
+            StringAnagram stringAnagram = new StringAnagram();
+            stringAnagram.ScenarioOne();
 
         } catch (Exception ex){
             System.out.println();

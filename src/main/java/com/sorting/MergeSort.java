@@ -12,7 +12,7 @@ public class MergeSort<T extends  Comparable<T>> {
 
         int midpoint = array.size()/2;
         ArrayList<T> leftHalf = Sort(splitArray(array,0, midpoint));
-        ArrayList<T> rightHalf = Sort(splitArray(array, midpoint, array.size()-1));
+        ArrayList<T> rightHalf = Sort(splitArray(array, midpoint+1, array.size()));
         return merge(leftHalf, rightHalf);
     }
 

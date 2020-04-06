@@ -1,6 +1,7 @@
 package com.crackingcodeinterview;
 
 
+import java.util.HashMap;
 import java.util.HashSet;
 
 /*
@@ -27,20 +28,18 @@ public class CoinChangeProblem {
     public void ScenarioOne(){
         int N = 4;
         int[] s = {1,2,3};
-        HashSet<Integer> set = new HashSet<>();
-        int output = makeChange(N, s, 0, set);
+        int output = makeChange(N, s, 0, new HashMap<>());
         System.out.printf("Actual: %d Expected %d \n", output,4);
     }
 
     public void ScenarioTwo(){
         int N = 10;
         int[] s= {2,5,3,6};
-        HashSet<Integer> set = new HashSet<>();
-        int output = makeChange(N, s, 0, set);
+        int output = makeChange(N, s, 0, new HashMap<>());
         System.out.printf("Actual: %d Expected %d \n", output,5);
     }
 
-    public int makeChange(int n, int[] s, int currentCoin,  HashSet<Integer> set){
+    public int makeChange(int n, int[] s, int currentCoin,  HashMap<String,Integer> memo){
 
         // over shot
         if(n < 0){
@@ -57,8 +56,15 @@ public class CoinChangeProblem {
             return  0;
         }
 
-        return makeChange(n-s[currentCoin],s,currentCoin, set) +
-                makeChange(n,s, currentCoin+1, set);
+        String key = n+"-"+currentCoin;
+        if(memo.containsKey(key)){
+            return memo.get(key);
+        }
+
+        int ways = makeChange(n-s[currentCoin],s,currentCoin, memo)
+                + makeChange(n,s, currentCoin+1, memo);
+        memo.put(key,ways);
+        return ways;
     }
 
 }
