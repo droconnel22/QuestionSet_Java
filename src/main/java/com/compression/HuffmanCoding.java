@@ -1,14 +1,5 @@
 package com.compression;
 
-/*
-f : 0
-c:  100
-d : 101
-a : 1100
-b:  1101
-e:  111
- */
-
 import java.util.*;
 
 /*
@@ -21,7 +12,6 @@ import java.util.*;
  */
 public class HuffmanCoding {
     public static void main(String...args) {
-
         Map<Character, Integer> map = Map.of(
                 'a',5,
                 'b',9,
@@ -29,7 +19,6 @@ public class HuffmanCoding {
                 'd',13,
                 'e',16,
                 'f',45
-
         );
 
         var tree = new HuffmanTree<Character,Integer>();
@@ -157,5 +146,4 @@ class HuffmanTree<TValue,TWeight extends Number & Comparable<TWeight>> {
             traverseTree(node.getRight(),encoding+"1");
         }
     }
-
 }

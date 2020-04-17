@@ -7,56 +7,127 @@ public class AVLTree<T extends Number & Comparable<T>> {
     private AVLNode<T> root;
 
     public void Insert(T value) {
-        if(this.root == null)
-            this.root = new AVLNode<T>(value,0,null, null,null);
-        else
-            insert(this.root, value);
+        this.root = this.insert(this.root, value);
     }
 
-    private void insert(AVLNode<T> node, T value){
-        int result =node.getValue().compareTo(value);
-        if(result < 0) {
-            if(node.getRight() == null){
-                AVLNode<T> newNode =
-                        new AVLNode<>(value,0,
-                                node,
-                                null,
-                                null);
+    private Integer getHeight(AVLNode<T> node) {
+        if(node == null)
+            return 0;
+        return node.getHeight();
+    }
 
-                node.setRight(newNode);
-            } else {
-                insert(node.getRight(),value);
-            }
-        } else if(result > 0) {
-            if(node.getLeft() == null) {
-                AVLNode<T> newNode =
-                        new AVLNode<>(value,
-                                0,
-                                node,
-                                null,
-                                null);
-                node.setLeft(newNode);
-            } else {
-                insert(node.getLeft(),value);
-            }
+    private Integer getBalance(AVLNode<T> node) {
+        if(node == null)
+            return 0;
+        // check balance of children
+        return getHeight(node.getLeft()) - getHeight(node.getRight());
+    }
+
+    private AVLNode<T> insert(AVLNode<T> node, T value){
+        // 1. traditional node insert
+        if(node == null)
+            return new AVLNode<>(value);
+
+        int result = node.getValue().compareTo(value);
+        if(result > 1) {
+            node.setLeft(insert(node.getLeft(),value));
+        } else if(result < 1) {
+            node.setRight(insert(node.getRight(),value));
         } else {
-            // value exists.
+            return node;
         }
+
+        // Update Height
+        node.setHeight(1 +Math.max(getHeight(node.getLeft()), getHeight(node.getRight())));
+
+        // Check Balance cases
+        int balance = getBalance(node);
+
+        // There are 4 cases if balance is off
+        // If balance factor is greater than 1, then the current node is unbalanced
+        //  . To check whether it is left left case or not, compare
+        //  the newly inserted key with the key in left subtree root.
+
+        //  BST property (keys(left) < key(root) < keys(right)).
+        // Left Left Case
+        if(balance > 1 && value.compareTo(node.getLeft().getValue()) < 0)
+            return  rightRotate(node);
+
+        // Right Right Case
+        if(balance < -1 && value.compareTo(node.getRight().getValue()) > 0)
+            return leftRotate(node);
+
+        // Left Right Case
+        if(balance > 1 && value.compareTo(node.getLeft().getValue()) > 0)
+            return  rightRotate(node);
+
+        // Right Left Case
+        if(balance < -1 && value.compareTo(node.getRight().getValue()) < 0)
+            return leftRotate(node);
+
+        return node;
     }
 
-    public Optional<AVLNode<T>> FindNodeByValue(T value){
-        return findNodeByValue(this.root, value);
+    /*
+    T1, T2 and T3 are subtrees of the tree
+rooted with y (on the left side) or x (on
+the right side)
+     y                               x
+    / \     Right Rotation          /  \
+   x   T3   - - - - - - - >        T1   y
+  / \       < - - - - - - -            / \
+ T1  T2     Left Rotation            T2  T3
+Keys in both of the above trees follow the
+following order
+ keys(T1) < key(x) < keys(T2) < key(y) < keys(T3)
+So BST property is not violated anywhere.
+     */
+    private AVLNode<T> rightRotate(AVLNode<T> y) {
+        AVLNode<T> x = y.getLeft();
+        AVLNode<T> T2 = x.getRight();
+
+        // Perform rotation
+        x.setRight(y);
+        y.setLeft(T2);
+
+        // Recalculate height
+        x.setHeight(1+Math.max(getHeight(x.getRight()), getHeight(x.getLeft())));
+        y.setHeight(1+Math.max(getHeight(y.getRight()), getHeight(y.getLeft())));
+
+        // Return root
+        return x;
     }
 
-    private Optional<AVLNode<T>> findNodeByValue(AVLNode<T> node, T value){
+    private AVLNode<T> leftRotate(AVLNode<T> x) {
+        AVLNode<T> y = x.getRight();
+        AVLNode<T> T2 = y.getLeft();
+
+        // Perform rotation
+        y.setLeft(x);
+        x.setRight(T2);
+
+        //Recalculate height
+        x.setHeight(1+Math.max(getHeight(x.getRight()), getHeight(x.getLeft())));
+        y.setHeight(1+Math.max(getHeight(y.getRight()), getHeight(y.getLeft())));
+
+        // Return root
+        return y;
+    }
+
+
+    public Optional<AVLNode<T>> TryFindNodeByValue(T value){
+        return tryFindNodeByValue(this.root, value);
+    }
+
+    private Optional<AVLNode<T>> tryFindNodeByValue(AVLNode<T> node, T value){
         if(node ==null) {
             return  Optional.empty();
         }
         int result = node.getValue().compareTo(value);
         if(result < 0){
-            return findNodeByValue(node.getRight(),value);
+            return tryFindNodeByValue(node.getRight(),value);
         } else if(result > 0) {
-            return findNodeByValue(node.getLeft(),value);
+            return tryFindNodeByValue(node.getLeft(),value);
         } else {
             return Optional.of(node);
         }
@@ -67,7 +138,7 @@ public class AVLTree<T extends Number & Comparable<T>> {
             throw  new IllegalArgumentException("Value is null");
         }
 
-        Optional<AVLNode<T>> result = this.findNodeByValue(this.root,value);
+        Optional<AVLNode<T>> result = this.tryFindNodeByValue(this.root,value);
         if(result.isEmpty()) {
             return Optional.empty();
         }

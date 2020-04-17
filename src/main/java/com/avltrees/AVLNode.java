@@ -2,15 +2,15 @@ package com.avltrees;
 
 public class AVLNode<T extends Comparable<T>> {
     private T value;
-    private Integer balancefactor;
+    private Integer height;
 
     private AVLNode<T> parent;
     private AVLNode<T> right;
     private AVLNode<T> left;
 
-    public AVLNode(T value, Integer balancefactor, AVLNode<T> parent, AVLNode<T> right, AVLNode<T> left) {
+    public AVLNode(T value, Integer height, AVLNode<T> parent, AVLNode<T> right, AVLNode<T> left) {
         this.value = value;
-        this.balancefactor = balancefactor;
+        this.height = height;
         this.parent = parent;
         this.right = right;
         this.left = left;
@@ -36,12 +36,13 @@ public class AVLNode<T extends Comparable<T>> {
         return left;
     }
 
-    public Integer getBalancefactor() {
-        return balancefactor;
+
+    public Integer getHeight() {
+        return height;
     }
 
-    public void setBalancefactor(Integer balancefactor) {
-        this.balancefactor = balancefactor;
+    public void setHeight(Integer height) {
+        this.height = height;
     }
 
     public void setRight(AVLNode<T> right) {

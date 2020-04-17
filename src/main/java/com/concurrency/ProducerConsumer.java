@@ -53,7 +53,8 @@ public class ProducerConsumer {
             return "Consumed " + (count-1);
         };
 
-        Callable<String> supplier = () -> {
+        Callable<String> supplier = () ->
+        {
             int count =0;
                 while (count++ < 50) {
                     try {
