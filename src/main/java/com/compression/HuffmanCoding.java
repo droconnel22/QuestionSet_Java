@@ -1,6 +1,7 @@
 package com.compression;
 
 import java.util.*;
+import java.util.function.Function;
 
 /*
    'f',0,
@@ -22,9 +23,14 @@ public class HuffmanCoding {
         );
 
         var tree = new HuffmanTree<Character,Integer>();
-        tree.BuildTree(map);
+        tree.BuildTree(map, Integer::sum);
         tree.TraverseTree();
     }
+}
+
+@FunctionalInterface
+interface Reducer<TWeight> {
+     TWeight Reduce(TWeight item, TWeight other);
 }
 
 class PriorityQueue<Tkey , TItem extends Number & Comparable<TItem>> {
@@ -113,21 +119,21 @@ class HuffmanTree<TValue,TWeight extends Number & Comparable<TWeight>> {
 
     private HuffmanNode<TValue,TWeight> root;
 
-    public void BuildTree(Map<TValue,TWeight> map){
+    public void BuildTree(Map<TValue,TWeight> map, Reducer<TWeight> reducer){
         // Build List of Leaf Nodes in queue
         var priorityQueue = new PriorityQueue<HuffmanNode<TValue,TWeight>,TWeight>();
 
         for(Map.Entry<TValue,TWeight> entry : map.entrySet()){
-            HuffmanNode node = new HuffmanNode<TValue,TWeight>(entry.getKey(),entry.getValue());
+            var node = new HuffmanNode<TValue,TWeight>(entry.getKey(),entry.getValue());
             priorityQueue.Enqueue(node, entry.getValue());
         }
 
         while(priorityQueue.GetSize() > 1) {
             var leftNode = priorityQueue.TryDequeueMin();
             var rightNode = priorityQueue.TryDequeueMin();
-            Integer combinedValue =  leftNode.get().getWeight().intValue() + rightNode.get().getWeight().intValue();
-            var branchNode = new HuffmanNode<TValue,TWeight>((TWeight)combinedValue, leftNode.get(), rightNode.get());
-            priorityQueue.Enqueue(branchNode,(TWeight)combinedValue);
+            var combinedValue = reducer.Reduce(leftNode.get().getWeight(),rightNode.get().getWeight());
+            var branchNode = new HuffmanNode<TValue,TWeight>(combinedValue, leftNode.get(), rightNode.get());
+            priorityQueue.Enqueue(branchNode,combinedValue);
         }
 
         this.root = priorityQueue.TryDequeueMin().get();
