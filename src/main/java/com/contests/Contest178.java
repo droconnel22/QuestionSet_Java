@@ -176,6 +176,12 @@ There is a tie and we rank teams ascending by their IDs.
                 investigate(listNode.next,treeNode.right);
     }
 
+    // 1368. Minimum Cost to Make at Least One Valid Path in a Grid
+
+    public int minCost(int[][] grid) {
+        return -1;
+    }
+
 
 
 }
